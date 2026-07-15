@@ -1,0 +1,12 @@
+#pragma once
+
+// Comportament general de l'aplicació
+#define LOOP_DURATION 20000   // Temps de cicle en ms
+
+// Introdueix la configuració de la xarxa WIFI on es conectarà la placa
+#define WIFI_SSID     "SSID"
+#define WIFI_PASSWORD "PASS"
+
+// Configuració per a la connexió amb el canal de ThinkSpeak:
+#define TS_CHANNEL_ID 12345
+#define TS_CHANNEL_API_KEY "ABCDEFGHTI..."

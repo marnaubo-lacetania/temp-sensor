@@ -1,6 +1,9 @@
-#include <DHT.h>
-#include <Wire.h>
-#include <LiquidCrystal_I2C.h>
+// Llibreries necessàries, natives i a instal·lar
+#include <DHT.h>                  // Per la comunicació amb el sensor DHT11 de temperaturoa i humitat (Requereix INSTAL·LACIÓ)
+#include <Wire.h>                 // Gestió de la connectivitat IO amb el pinatge de la placa
+
+// Llibreries locals
+#include <BasicLcd.h>
 
 #define DHTPIN 17             // GPIO on està connectat el sensor de temperatura i humitat
 #define DHTTYPE DHT11         // Tipus de sensor de temperatura i humitat
@@ -9,21 +12,17 @@
 #define LCD_ROWS 2            // Nº de files disponibles al panell LCD
 #define LCD_ADDRESS 0x27      // Adreça del panell LCD on mostrar els resultats.
 
-#define LOOP_DURATION 10000   // Temps de cicle en ms
+#define LOOP_DURATION 20000   // Temps de cicle en ms
 
 // Definim variables globals
 DHT dht(DHTPIN, DHTTYPE);
-LiquidCrystal_I2C lcd(LCD_ADDRESS, LCD_COLS, LCD_ROWS);
+BasicLcd lcd(LCD_ADDRESS, LCD_COLS, LCD_ROWS);
 
 void setup() {
-  // Inicialització del sensor de Temperatura + Humitat
+  // Inicialització d'instrumental. Comunicació sèrie, sensor i pantalla LCD:
+  Serial.begin(115200);
   dht.begin();
-
-  // Inicialització del panell LCD
-  lcd.init();
-  lcd.backlight();
-  lcd.setCursor(0,0);
-  lcd.print("Iniciant...");
+  lcd.start();
 }
 
 void loop() {
@@ -33,23 +32,13 @@ void loop() {
 
   // Comprovar errors
   if (isnan(humity) || isnan(temperature)) {
-    lcd.print("Error llegint el DHT11");
+    lcd.write("Error llegint", "DHT11");
     return;
   }
 
-  lcd.clear();
-  lcd.setCursor(0,0);
-
-  lcd.print("Temp: ");
-  lcd.print(temperature,1);
-  lcd.print((char)223);   // símbol °
-  lcd.print("C");
-
-  lcd.setCursor(0,1);
-  lcd.print("Humitat: ");
-  lcd.print(humity,0);
-  lcd.print("%");
-
+  // Mostrem informació
+  lcd.display(temperature, humity);
+  
   // Esperem per la següent volta
   delay(LOOP_DURATION);
 }
