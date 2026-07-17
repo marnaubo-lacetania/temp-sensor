@@ -1,4 +1,21 @@
 #include "BasicLcd.h"
+#include <iostream>
+#include <iomanip>
+#include <sstream>
+#include <ctime>
+
+String obtenirHoraActual() {
+    time_t now = time(nullptr);
+    tm* local = localtime(&now);
+
+    String hora = String(local->tm_hour);
+    String minuts = String(local->tm_min);
+
+    if (hora.length() < 2) hora = "0" + hora;
+    if (minuts.length() < 2) minuts = "0" + minuts;
+
+    return hora + ":" + minuts;
+}
 
 BasicLcd::BasicLcd(int address, int cols, int rows)
 	: _lcd(address, cols, rows) 
@@ -34,6 +51,6 @@ void BasicLcd::display(float temperature, float humity) {
   }
 
   String line1 = "T: " + String(temperature, 2) + (char)223 + "C";
-  String line2 = "H: " + String(humity, 0) + "%       " + String(_count);
+  String line2 = "H: " + String(humity, 0) + "%     " + obtenirHoraActual();
   write(line1, line2);
 }
