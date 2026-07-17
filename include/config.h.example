@@ -6,6 +6,8 @@
 // Introdueix la configuració de la xarxa WIFI on es conectarà la placa
 #define WIFI_SSID     "SSID"
 #define WIFI_PASSWORD "PASS"
+#define WIFI_TYPE "type"        // ent = Enterprise (EAP) / <blank> Basic WPA2 WIFI
+#define WIFI_USER "username"    // User for EAP WiFi connections
 
 // Configuració per a la connexió amb el canal de ThinkSpeak:
 #define TS_CHANNEL_ID 12345
