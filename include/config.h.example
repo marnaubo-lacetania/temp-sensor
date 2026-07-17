@@ -15,3 +15,6 @@
 #define LCD_COLS 16           // Nº de columnes de caràcters disponibles al panell LCD
 #define LCD_ROWS 2            // Nº de files disponibles al panell LCD
 #define LCD_ADDRESS 0x27      // Adreça del panell LCD on mostrar els resultats.
+
+// Configuració de "Aules que cremen"
+#define AQC_API_TOKEN "1234567890"
