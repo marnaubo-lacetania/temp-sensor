@@ -13,9 +13,7 @@
 #include <BasicLcd.h>
 #include "config.h"
 
-#define DHTPIN 17
-#define DHTTYPE DHT11
-DHT dht(DHTPIN, DHTTYPE);
+DHT dht(DHTPIN, DHT11);
 
 // =========================================================================
 // [BLOC 2] VARIABLES GLOBALS I SON PROFUND (DEEP SLEEP)
@@ -298,9 +296,24 @@ void setup() {
     enterDeepSleep();
   }
 
-  //Mostrem les dades pel LCD:
+  // Mostrem les dades pel LCD. Indicarem l'hora de la lectura per desacoplar la llibreria del tipus
+  // de connexió a Internet (WIFI, 4G, etc.) i del tipus de servidor NTP que s'utilitzi. 
+  // Així, el panell LCD sempre mostrarà l'hora local correcta.
+  configTime(3600, 3600, "pool.ntp.org");
+  struct tm timeinfo;
+  while (!getLocalTime(&timeinfo)) {
+    //Serial.println("Esperant sincronització...");
+    delay(1000);
+  }
+
+  String ara =
+    String(timeinfo.tm_hour < 10 ? "0" : "") +
+    String(timeinfo.tm_hour) + ":" +
+    String(timeinfo.tm_min < 10 ? "0" : "") +
+    String(timeinfo.tm_min);
+
   lcd.start();
-  lcd.display(t, h);
+  lcd.display(t, h, ara);
 
   JsonDocument doc;
   doc["temperature"] = t;

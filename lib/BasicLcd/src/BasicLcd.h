@@ -6,7 +6,7 @@ class BasicLcd {
 		
 		void start();
 		void write(String line1, String line2 = "");
-		void display(float temperature, float humity);
+		void display(float temperature, float humity, String time);
 	
 	private:
 		LiquidCrystal_I2C _lcd;

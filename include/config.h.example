@@ -13,6 +13,9 @@
 #define TS_CHANNEL_ID 12345
 #define TS_CHANNEL_API_KEY "ABCDEFGHTI..."
 
+// Configuració del sensor DHT11
+#define DHTPIN 17
+
 // Configuració del panell LCD
 #define LCD_COLS 16           // Nº de columnes de caràcters disponibles al panell LCD
 #define LCD_ROWS 2            // Nº de files disponibles al panell LCD
