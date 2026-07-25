@@ -1,6 +1,7 @@
 // Llibreries necessàries, natives i a instal·lar
 #include <DHT.h>                  // Per la comunicació amb el sensor DHT11 de temperaturoa i humitat (Requereix INSTAL·LACIÓ)
 #include <Wire.h>                 // Gestió de la connectivitat IO amb el pinatge de la placa
+#include <Utils.h>                // Llibreria d'utilitats pròpia (gestió de l'hora actual)
 
 // Llibreries locals
 #include <BasicLcd.h>
@@ -37,7 +38,7 @@ void loop() {
   }
 
   // Mostrem informació
-  lcd.display(temperature, humity);
+  lcd.display(temperature, humity, Utils::obtenirHoraActual());
   
   // Esperem per la següent volta
   delay(LOOP_DURATION);

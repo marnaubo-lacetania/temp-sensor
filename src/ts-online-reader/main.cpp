@@ -9,6 +9,7 @@
 // Fitxers i llibreries locals a incloure al compilar
 #include "config.h"
 #include <BasicLcd.h>
+#include <Utils.h>                // Llibreria d'utilitats pròpia (gestió de l'hora actual)
 
 #define DHTPIN 17             // GPIO on està connectat el sensor de temperatura i humitat
 #define DHTTYPE DHT11         // Tipus de sensor de temperatura i humitat
@@ -131,7 +132,7 @@ void loop() {
     return;
   }
 
-  lcd.display(temperature, humity);
+  lcd.display(temperature, humity, Utils::obtenirHoraActual());
 
   if (! uploadData(temperature, humity)) {
     lcd.write("Error carregant", "dades al canal");

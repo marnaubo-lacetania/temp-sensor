@@ -6,38 +6,6 @@
 #include <WiFi.h>
 #include <time.h>
 
-String obtenirHoraActual() {
-  // Calcul de lhora actual:
-  configTime(3600, 3600, "pool.ntp.org");
-  struct tm timeinfo;
-  while (!getLocalTime(&timeinfo)) {
-    //Serial.println("Esperant sincronització...");
-    delay(1000);
-  }
-
-  String horaActual =
-    String(timeinfo.tm_hour < 10 ? "0" : "") +
-    String(timeinfo.tm_hour) + ":" +
-    String(timeinfo.tm_min < 10 ? "0" : "") +
-    String(timeinfo.tm_min);
-
-  return horaActual;
-  //Serial.println("Hora sincronitzada!");
-
-  /*
-    time_t now = time(nullptr);
-    tm* local = localtime(&now);
-
-    String hora = String(local->tm_hour);
-    String minuts = String(local->tm_min);
-
-    if (hora.length() < 2) hora = "0" + hora;
-    if (minuts.length() < 2) minuts = "0" + minuts;
-
-    return hora + ":" + minuts;
-  */
-}
-
 BasicLcd::BasicLcd(int address, int cols, int rows)
 	: _lcd(address, cols, rows) 
 {

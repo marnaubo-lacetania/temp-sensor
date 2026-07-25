@@ -12,6 +12,7 @@
 #include <esp_wpa2.h>
 #include <BasicLcd.h>
 #include "config.h"
+#include <Utils.h>
 
 DHT dht(DHTPIN, DHT11);
 
@@ -298,22 +299,8 @@ void setup() {
 
   // Mostrem les dades pel LCD. Indicarem l'hora de la lectura per desacoplar la llibreria del tipus
   // de connexió a Internet (WIFI, 4G, etc.) i del tipus de servidor NTP que s'utilitzi. 
-  // Així, el panell LCD sempre mostrarà l'hora local correcta.
-  configTime(3600, 3600, "pool.ntp.org");
-  struct tm timeinfo;
-  while (!getLocalTime(&timeinfo)) {
-    //Serial.println("Esperant sincronització...");
-    delay(1000);
-  }
-
-  String ara =
-    String(timeinfo.tm_hour < 10 ? "0" : "") +
-    String(timeinfo.tm_hour) + ":" +
-    String(timeinfo.tm_min < 10 ? "0" : "") +
-    String(timeinfo.tm_min);
-
   lcd.start();
-  lcd.display(t, h, ara);
+  lcd.display(t, h, Utils::obtenirHoraActual());
 
   JsonDocument doc;
   doc["temperature"] = t;
