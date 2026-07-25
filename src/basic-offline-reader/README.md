@@ -1,16 +1,30 @@
 # basic-offline-reader
 
 ## Descripció
-Aquesta versió de l'aplicatiu s'encarrega únicament de llegir les dades del sensor i mostrar-les per 
-la pantalla LCD. No requereix de cap tipus de connectivitat a internet al treballar de forma aillada i 
-desconectada.
+Aquest codi llegeix temperatura i humitat d’un sensor DHT11 i mostra els valors en una pantalla LCD.
 
-## Llibreries requerides
-Caldrà instal·lar les següents llibreries des de l'entorn IDE d'Arduino:
-- DHT Sensor Library (Adafruits): https://github.com/adafruit/DHT-sensor-library (verificat amb la versió v1.4.7). També caldrà instal·lar les llibreries que indica com a requisits.
-- LiquidCrystal I2C (de Frank de Brabander o compatible): https://github.com/johnrickman/LiquidCrystal_I2C (verificat amb la versió v1.1.2).
-- ThingSpeak (de MathWorks): https://thingspeak.mathworks.com/ (verificat amb la versió 2.1.1)
+## Funcionament
 
+El `main.cpp` fa les següents tasques:
 
-## Configuració
-Al 
+### Inicialització de components
+
+- Configura la comunicació amb el sensor DHT11 (temperatura i humitat)
+- Inicialitza el panell LCD I2C de 16x2 per mostrar informació
+
+### Lectura de sensors
+
+- Llegeix els valors de temperatura i humitat del sensor DHT11
+- Detecta possibles errors en la lectura de dades
+- Mostra els valors al panell LCD
+
+## Fluxe de funcionament
+
+1. **Setup**: Inicialitza tots els components
+2. **Loop**: Llegeix sensors cada `LOOP_DURATION`
+3. **Visualització**: Mostra l'estat i les lectures al panell LCD
+
+## Dependències
+
+- **DHT.h**: Lectura del sensor DHT11
+- **LiquidCrystal_I2C.h**: Control del panell LCD
