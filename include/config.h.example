@@ -1,25 +1,11 @@
 #pragma once
 
-// Comportament general de l'aplicació
-#define LOOP_DURATION 20000   // Temps de cicle en ms
-
 // Introdueix la configuració de la xarxa WIFI on es conectarà la placa
 #define WIFI_SSID     "SSID"
 #define WIFI_PASSWORD "PASS"
 #define WIFI_TYPE "type"        // ent = Enterprise (EAP) / <blank> Basic WPA2 WIFI
 #define WIFI_USER "username"    // User for EAP WiFi connections
 
-// Configuració per a la connexió amb el canal de ThinkSpeak:
-#define TS_CHANNEL_ID 12345
-#define TS_CHANNEL_API_KEY "ABCDEFGHTI..."
-
-// Configuració del sensor DHT11
-#define DHTPIN 17
-
-// Configuració del panell LCD
-#define LCD_COLS 16           // Nº de columnes de caràcters disponibles al panell LCD
-#define LCD_ROWS 2            // Nº de files disponibles al panell LCD
-#define LCD_ADDRESS 0x27      // Adreça del panell LCD on mostrar els resultats.
-
-// Configuració de "Aules que cremen"
-#define AQC_API_TOKEN "1234567890"
+// URL de la API de Supabase per la consulta de configuracions de dispositius:
+#define SUPABASE_API_URL "https://xxxxxxxxxx.supabase.co/rest/v1/sensor-config"
+#define SUPABASE_API_TOKEN "sb_publishable_key"

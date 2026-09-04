@@ -81,6 +81,4 @@ Caldrà instal·lar les següents llibreries per Arduino, tot i que PlatformIO j
 - ThingSpeak (de MathWorks): https://thingspeak.mathworks.com/ (verificat amb la versió 2.1.1)
 - Arduino Json (de bblanchon): https://github.com/bblanchon/ArduinoJson (verificat amb la versió 7.2.2).
 
-## Entorns
-En la configuració de PlatformIO hi ha definits diferents entorns corresponents a diferents versions d'aplicatius amb diverses funcionalitats i utilitats. A la carpeta de cadascún d'ells hi ha la informació detallada.
 

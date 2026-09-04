@@ -11,16 +11,6 @@ El `main.cpp` fa les següents tasques:
 - Configura el sensor DHT11 i inicialitza variables globals de configuració.
 - Defineix el deep sleep i la durada de l'adormida entre lectures.
 
-### Gestió de configuració
-- Llegeix `/config.json` de LittleFS si existeix i carrega les credencials Wi-Fi, tipus de xarxa i token de l'API.
-- Guarda la configuració actual en `/config.json` després de rebre-la des del portal captiu.
-
-### Portal captiu de configuració
-- En arrencada en fred, crea un punt d'accés Wi-Fi amb nom `Configurem_Sensor_Aula`.
-- Executa un servidor web i un servidor DNS perquè el dispositiu actuï com a portal captiu.
-- Proporciona una pàgina HTML per configurar el tipus de xarxa, SSID, usuari d'entorn, contrasenya i token.
-- Guarda la configuració i reinicia la placa un cop l'usuari l'envia.
-
 ### Connexió Wi-Fi definitiva
 - Després de la configuració o en reinici des de deep sleep, intenta connectar-se a la xarxa Wi-Fi en mode `WIFI_STA`.
 - Suporta dos tipus de xarxa:
@@ -28,12 +18,17 @@ El `main.cpp` fa les següents tasques:
   - WPA2-Personal per a xarxes de casa o normals.
 - Si no connecta en un nombre de reintents, entra novament en deep sleep per 60 segons.
 
+### Descàrrega de la configuració amb SupaBase
+- Es connecta a una BD del servei gratuït SupaBase
+- Es descarrega la configuració vinculada al dispositiu identificat segons l'adreça MAC de la placa.
+
 ### Lectura de sensors i enviament de dades
 - Inicia el sensor DHT11 i llegeix temperatura i humitat.
 - Si la lectura falla, s'adorm de nou per 60 segons.
 - Sincronitza l'hora amb NTP per mostrar l'hora local al LCD.
 - Mostra les dades de temperatura, humitat i hora al panell LCD.
 - Envia un objecte JSON amb les lectures a l'endpoint `https://aulesquecremen.cat/api/v1/readings`.
+- Envia les dades també a un canal de ThingSpeak segons les dades descarregades amb la configuració.
 - Inclou les capçaleres `Content-Type`, `Accept` i `Authorization: Bearer <token>`.
 
 ### Gestió de la resposta de l'API
@@ -43,13 +38,16 @@ El `main.cpp` fa les següents tasques:
 - Si hi ha altres errors HTTP o de xarxa, ho registra i entra en deep sleep.
 
 ## Flux de funcionament
-1. `setup()` inicialitza sèries, carrega configuració i determina si és arrencada en fred o des de deep sleep.
-2. En arrencada en fred, obre el portal captiu perquè l'usuari configuri la Wi-Fi i el token.
-3. Connecta a la Wi-Fi amb les credencials configurades.
-4. Llegeix el sensor DHT11, mostra dades al LCD i transmet-les a l'API.
+`setup()` executa tota la lògica de l'aplicació, al finalitzar el codi de "setup" entra en mode "deep_sleep". Per tant no s'executa res de codi en el loop().
+1. Connecta a la Wi-Fi amb les credencials configurades.
+2. Descarrega la configuració de SupaBase vinculada a la MAC
+3. Llegeix el sensor DHT11, mostra dades al LCD
+4. Carrega les dades a l'API de "Aules que cremen".
+5. Carrega les dades a ThingSpeak.
 5. Entra en `esp_deep_sleep` durant l'interval definit pel servidor o per la configuració per estalviar energia.
 
 ## Dependències externes
 - **DHT.h**: Lectura del sensor DHT11
 - **LiquidCrystal_I2C.h**: Control del panell LCD
 - **ArduinoJson.h**: Treball amb dades en format JSON.
+- **ThingSpeak.h**: Connexió a la API de ThingSpeak.
